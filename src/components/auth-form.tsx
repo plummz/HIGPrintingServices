@@ -123,6 +123,10 @@ export function AuthForm({ mode }: { mode: Mode }) {
               Password
               <input
                 name="password"
+                aria-label="Password"
+                aria-describedby={
+                  mode !== "login" ? "password-hint" : undefined
+                }
                 type="password"
                 required
                 minLength={mode === "login" ? 1 : 12}
@@ -131,7 +135,9 @@ export function AuthForm({ mode }: { mode: Mode }) {
                   mode === "login" ? "current-password" : "new-password"
                 }
               />
-              {mode !== "login" && <small>Use at least 12 characters.</small>}
+              {mode !== "login" && (
+                <small id="password-hint">Use at least 12 characters.</small>
+              )}
             </label>
           )}
           <button disabled={busy}>

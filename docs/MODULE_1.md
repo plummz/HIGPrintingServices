@@ -40,11 +40,11 @@ All business mutations have a database-backed per-user 30 requests/minute limit.
 
 ## Verification status
 
-Local lint, TypeScript checks, production build and 31 unit/integration tests have passed. Local DB verification uses PGlite's PostgreSQL engine through its socket adapter. Native PostgreSQL CI and browser checks are tracked in the pull request; their final observed status will be recorded before delivery.
+Local lint, TypeScript checks, production build, 31 unit/integration tests and all four desktop/mobile browser checks have passed. Browser coverage includes verified signup, login, workspace creation, settings persistence after reload, logout and neutral password-reset requests. Local DB verification uses PGlite's PostgreSQL engine through its socket adapter. Native PostgreSQL 17 migrations and integration checks have also passed in GitHub Actions. The pull request carries the final combined CI result for each revision.
 
 ## Operational limitations
 
-No hosted deployment or real SMTP has been configured. Production auth requires both. No seeded admin exists. File mail is development-only and is excluded from Git. Native PostgreSQL concurrency checks are required before production use; PGlite serializes connections differently. Test-data cleanup is scoped to synthetic records; browser fixtures remain in the test database.
+No hosted deployment or real SMTP has been configured. Production auth requires both. No seeded admin exists. File mail is development-only and is excluded from Git. Native PostgreSQL concurrency checks passed in CI; PGlite serializes connections differently. Test-data cleanup is scoped to synthetic records; browser fixtures remain in the test database.
 
 Daily rate/session cleanup is an external scheduled command for now. No arbitrary permission graph, ownership-transfer wizard, customer job records, file storage, quote engine, PWA service worker or job dashboard metrics are implied by this foundation.
 

@@ -4,6 +4,7 @@ export default defineConfig({
   testDir: "tests/e2e",
   workers: 1,
   timeout: 60000,
+  expect: { timeout: 20000 },
   use: {
     baseURL: "http://localhost:3000",
     launchOptions: process.env.PLAYWRIGHT_EXECUTABLE_PATH

@@ -30,7 +30,17 @@ test("verified owner creates workspace, updates settings and signs out", async (
     page.getByRole("heading", { name: "Sample Print Studio" }),
   ).toBeVisible();
   await page.getByLabel("Contact details").fill("Example contact");
+  const saved = page.waitForResponse(
+    (response) =>
+      response.request().method() === "PATCH" &&
+      response.url().includes("/api/v1/businesses/"),
+  );
   await page.getByRole("button", { name: "Save settings" }).click();
+  expect((await saved).ok()).toBeTruthy();
+  await expect(
+    page.getByRole("button", { name: "Save settings" }),
+  ).toBeEnabled();
+  await page.reload();
   await expect(page.getByLabel("Contact details")).toHaveValue(
     "Example contact",
   );
@@ -42,9 +52,11 @@ test("verified owner creates workspace, updates settings and signs out", async (
       () => document.documentElement.scrollWidth <= window.innerWidth,
     ),
   ).toBeTruthy();
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
   await page.screenshot({
     path: `test-results/workspace-${test.info().project.name}.png`,
     fullPage: true,
+    caret: "initial",
   });
   await page.getByRole("button", { name: "Sign out" }).click();
   await expect(page).toHaveURL(/login$/);
@@ -61,8 +73,13 @@ test("login layout is readable and reset request is neutral", async ({
   await page.screenshot({
     path: `test-results/login-${test.info().project.name}.png`,
     fullPage: true,
+    caret: "initial",
   });
   await page.getByRole("link", { name: "Forgot password?" }).click();
+  await expect(page).toHaveURL(/forgot-password$/);
+  await expect(
+    page.getByRole("heading", { name: "Reset your password" }),
+  ).toBeVisible();
   await page.getByLabel("Email address").fill("missing@example.test");
   await page.getByRole("button", { name: "Send reset link" }).click();
   await expect(page.getByRole("status")).toContainText(
