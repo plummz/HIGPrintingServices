@@ -1,5 +1,14 @@
 name: Verify live Pages preview
 on:
+  push:
+    branches: [main]
+    paths:
+      [
+        "index.html",
+        "pages-assets/**",
+        "_config.yml",
+        ".github/workflows/pages-smoke.yml",
+      ]
   workflow_run:
     workflows: ["pages build and deployment"]
     types: [completed]
@@ -7,7 +16,7 @@ permissions:
   contents: read
 jobs:
   check-live-page:
-    if: github.event.workflow_run.conclusion == 'success'
+    if: github.event_name == 'push' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Verify deployed homepage and assets
@@ -16,7 +25,7 @@ jobs:
           set -euo pipefail
           site="https://plummz.github.io/HIGPrintingServices"
           for attempt in {1..12}; do
-            if curl --fail --silent --show-error --max-time 20 "$site/?revision=${{ github.event.workflow_run.head_sha }}" -o /tmp/home.html && grep -q 'id="workspace-view"' /tmp/home.html; then
+            if curl --fail --silent --show-error --max-time 20 "$site/?revision=${{ github.sha }}" -o /tmp/home.html && grep -q 'id="workspace-view"' /tmp/home.html; then
               break
             fi
             if [ "$attempt" -eq 12 ]; then exit 1; fi
