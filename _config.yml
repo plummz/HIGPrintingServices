@@ -1,0 +1,22 @@
+# GitHub Pages publishes the standalone preview, not the server application.
+exclude:
+  - README.md
+  - AGENTS.md
+  - CLAUDE.md
+  - docs
+  - src
+  - prisma
+  - scripts
+  - tests
+  - node_modules
+  - package.json
+  - package-lock.json
+  - next.config.ts
+  - next-env.d.ts
+  - tsconfig.json
+  - tsconfig.tsbuildinfo
+  - eslint.config.mjs
+  - postcss.config.mjs
+  - playwright.config.ts
+  - vitest.config.ts
+  - vitest.integration.config.ts
