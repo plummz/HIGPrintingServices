@@ -14,14 +14,25 @@
       content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
     />
     <title>HIGP Printing Services | PrintFlow</title>
-    <link rel="stylesheet" href="./pages-assets/style.css" />
-    <script src="./pages-assets/app.js" defer></script>
+    <link rel="stylesheet" href="./pages-assets/style.css?v=motion-1" />
+    <script src="./pages-assets/motion.js?v=motion-1" defer></script>
+    <script src="./pages-assets/app.js?v=motion-1" defer></script>
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
     <div class="preview-note">
-      Website preview · Explore the workspace. Online accounts and order
-      submission aren’t available here yet.
+      <span
+        >Website preview · Explore the workspace. Online accounts and order
+        submission aren’t available here yet.</span
+      ><button
+        type="button"
+        id="motion-toggle"
+        class="motion-toggle"
+        aria-pressed="false"
+        hidden
+      >
+        Pause motion
+      </button>
     </div>
     <div id="home-view">
       <header class="topbar">
@@ -53,6 +64,41 @@
               ><strong>A better day<br />at the print shop.</strong
               ><i>From first idea to final print.</i>
             </div>
+          </div>
+        </section>
+        <section
+          class="print-story container"
+          aria-labelledby="print-story-title"
+        >
+          <div class="print-story-copy">
+            <span class="eyebrow">FROM IDEA TO IMPRESSION</span>
+            <h2 id="print-story-title">Watch an idea<br />take shape.</h2>
+            <p class="muted">
+              A little creativity. A splash of color.<br />Something you can
+              hold in your hands.
+            </p>
+            <button type="button" class="secondary" id="replay-print" hidden>
+              Replay the print ↻
+            </button>
+          </div>
+          <div class="print-stage" aria-hidden="true">
+            <div class="registration registration-one"></div>
+            <div class="registration registration-two"></div>
+            <div class="ink-orbit">
+              <span class="ink-dot cyan"></span
+              ><span class="ink-dot pink"></span
+              ><span class="ink-dot yellow"></span>
+            </div>
+            <div class="print-sheet">
+              <div class="sheet-topline">HIGP / CREATIVE STUDIO</div>
+              <div class="print-art">
+                <span></span><span></span><span></span>
+              </div>
+              <strong>MAKE<br />AN IMPRESSION.</strong>
+              <div class="sheet-bottomline">IDEAS INTO REALITY — 01</div>
+            </div>
+            <div class="printer-slot"><span>PRINTFLOW</span><i></i></div>
+            <span class="print-caption">DESIGN. PRINT. MAKE IT YOURS.</span>
           </div>
         </section>
         <section class="section-band" id="services">

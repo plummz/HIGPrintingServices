@@ -4,6 +4,8 @@
 
 [Open HIGP / PrintFlow](https://plummz.github.io/HIGPrintingServices/). GitHub Pages publishes the root `index.html` and `pages-assets/` using **main / (root)**. It provides the public service homepage and an interactive workspace preview. Business settings are saved only in the visitor's browser; reset clears them. No passwords, accounts, invitations or orders are submitted from this preview.
 
+The preview uses native Web Animations and CSS for page entrances, staggered scroll reveals, card/button interactions and a replayable paper-feed illustration. Motion is optional: a persistent pause control and the device reduced-motion preference disable it. No animation library or CDN is required.
+
 The Next.js application below remains the server-backed product. GitHub Pages cannot run its authentication or PostgreSQL APIs; those require a separate application host. The preview does not replace or weaken those controls. Keep the preview CSS aligned with `src/app/globals.css` when updating the application design. `_config.yml` excludes application source and documentation from the Pages output. The live-site workflow checks that deployment serves the homepage and its CSS/JavaScript.
 
 A modular printing-business PWA in development. **Module 1 implements accounts and business workspaces.** Orders, quotations, proofing, production, payments, inventory and PWA installation remain scheduled modules; this is not the completed MVP.

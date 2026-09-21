@@ -39,6 +39,7 @@
       return;
     }
     render(data);
+    window.PrintFlowMotion?.feedback(form);
     try {
       localStorage.setItem(key, JSON.stringify(data));
       status.textContent =
@@ -57,6 +58,7 @@
     render(defaults);
     status.textContent = "Preview settings reset.";
   });
+  let currentView;
   function navigate() {
     const route = location.hash.slice(1);
     const workspace = [
@@ -73,6 +75,18 @@
     document.title = workspace
       ? "Workspace preview | PrintFlow"
       : "HIGP Printing Services | PrintFlow";
+    const nextView = workspace ? "workspace-view" : "home-view";
+    if (currentView !== nextView) {
+      window.PrintFlowMotion?.enter(document.getElementById(nextView));
+      currentView = nextView;
+    }
+    document.querySelectorAll(".sidebar nav a").forEach((link) => {
+      const active =
+        link.hash ===
+        (route === "workspace-main" ? "#workspace" : location.hash);
+      if (active) link.setAttribute("aria-current", "page");
+      else link.removeAttribute("aria-current");
+    });
     const target = document.getElementById(route);
     if (workspace && route === "workspace") {
       window.scrollTo(0, 0);
