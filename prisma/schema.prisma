@@ -1,0 +1,150 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  STAFF
+  CUSTOMER
+}
+
+model User {
+  id            String       @id
+  name          String
+  email         String       @unique
+  emailVerified Boolean      @default(false)
+  image         String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+  memberships   Membership[]
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@unique([providerId, accountId])
+  @@index([userId])
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+}
+
+model RateLimit {
+  id          String @id
+  key         String @unique
+  count       Int
+  lastRequest BigInt
+}
+
+model Business {
+  id          String       @id @default(uuid()) @db.Uuid
+  name        String
+  currency    String       @default("PHP")
+  timeZone    String       @default("Asia/Manila")
+  contact     String       @default("")
+  address     String       @default("")
+  hours       String       @default("")
+  version     Int          @default(1)
+  createdAt   DateTime     @default(now()) @db.Timestamptz(3)
+  memberships Membership[]
+  invitations Invitation[]
+  audits      AuditEvent[]
+}
+
+model Membership {
+  id          String       @id @default(uuid()) @db.Uuid
+  businessId  String       @db.Uuid
+  userId      String
+  role        Role
+  active      Boolean      @default(true)
+  permissions String[]     @default([])
+  version     Int          @default(1)
+  createdAt   DateTime     @default(now()) @db.Timestamptz(3)
+  business    Business     @relation(fields: [businessId], references: [id], onDelete: Restrict)
+  user        User         @relation(fields: [userId], references: [id], onDelete: Restrict)
+  invitations Invitation[]
+
+  @@unique([businessId, userId])
+  @@unique([businessId, id])
+  @@index([userId, active])
+}
+
+model Invitation {
+  id          String     @id @default(uuid()) @db.Uuid
+  businessId  String     @db.Uuid
+  invitedById String     @db.Uuid
+  email       String
+  role        Role
+  permissions String[]   @default([])
+  tokenHash   String     @unique
+  expiresAt   DateTime   @db.Timestamptz(3)
+  consumedAt  DateTime?  @db.Timestamptz(3)
+  revokedAt   DateTime?  @db.Timestamptz(3)
+  business    Business   @relation(fields: [businessId], references: [id], onDelete: Restrict)
+  invitedBy   Membership @relation(fields: [businessId, invitedById], references: [businessId, id], onDelete: Restrict)
+
+  @@index([businessId, email])
+}
+
+model AuditEvent {
+  id          String   @id @default(uuid()) @db.Uuid
+  businessId  String   @db.Uuid
+  actorUserId String
+  action      String
+  resourceId  String
+  details     Json
+  createdAt   DateTime @default(now()) @db.Timestamptz(3)
+  business    Business @relation(fields: [businessId], references: [id], onDelete: Restrict)
+
+  @@index([businessId, createdAt])
+}
+
+model SecurityEvent {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String?
+  action    String
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+}
