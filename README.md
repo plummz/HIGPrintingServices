@@ -10,6 +10,8 @@ The Next.js application below remains the server-backed product. GitHub Pages ca
 
 A modular printing-business PWA in development. **Module 1 implements accounts and business workspaces.** Orders, quotations, proofing, production, payments, inventory and PWA installation remain scheduled modules; this is not the completed MVP.
 
+See [Studio redesign, account persistence and Desktop setup](docs/STUDIO_AND_ACCOUNTS.md) for this update. Profile deletion is available in the secure app at `/account`; live registration still requires the hosting/database/email connection.
+
 ## What works
 
 - Email/password registration, email verification, sign-in/out and password recovery through Better Auth.
@@ -23,6 +25,8 @@ A modular printing-business PWA in development. **Module 1 implements accounts a
 ## Requirements
 
 Node.js 24 LTS, npm, PostgreSQL 17 (CI baseline), and SMTP for production email. The application has not been deployed. Do not use GitHub Pages for its server/database runtime.
+
+For a quick storefront preview on Windows, double-click `Start-Preview.cmd`. On any platform with Node.js, run `npm run preview`. This serves only the public storefront on localhost, not authentication or the database.
 
 ## Local setup
 

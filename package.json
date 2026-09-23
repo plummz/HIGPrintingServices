@@ -20,7 +20,8 @@
     "format:check": "prettier --check .",
     "test:e2e": "playwright test",
     "db:local": "node scripts/dev-db.mjs",
-    "db:cleanup": "node scripts/cleanup.mjs"
+    "db:cleanup": "node scripts/cleanup.mjs",
+    "preview": "node scripts/preview.mjs"
   },
   "dependencies": {
     "@prisma/client": "6.19.3",

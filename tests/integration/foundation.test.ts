@@ -426,3 +426,118 @@ describe("abuse protection", () => {
     expect(statuses).toContain(429);
   });
 });
+
+describe("persistent accounts and self-service deletion", () => {
+  it("keeps a registered account after logout and a fresh auth instance", async () => {
+    const user = await fixture("persistent-profile");
+    const login = await signIn(user.email);
+    expect(login.status).toBe(200);
+    const logout = await auth().handler(
+      request("/api/auth/sign-out", {}, cookies(login)),
+    );
+    expect(logout.status).toBe(200);
+    await db.$disconnect();
+    const { getAuth } = await import("@/server/auth/config");
+    const fresh = await getAuth().handler(
+      request("/api/auth/sign-in/email", { email: user.email, password }),
+    );
+    expect(fresh.status).toBe(200);
+    expect((await db.user.findUnique({ where: { id: user.id } }))?.email).toBe(
+      user.email,
+    );
+  });
+  it("requires session, origin, exact confirmation and current password", async () => {
+    const { DELETE } = await import("@/app/api/v1/account/route");
+    const user = await fixture("delete-guards");
+    const login = await signIn(user.email);
+    function deletion(
+      body: unknown,
+      cookie = cookies(login),
+      origin = "http://localhost:3000",
+    ) {
+      return DELETE(
+        new Request("http://localhost:3000/api/v1/account", {
+          method: "DELETE",
+          headers: { "content-type": "application/json", origin, cookie },
+          body: JSON.stringify(body),
+        }),
+      );
+    }
+    expect(
+      (await deletion({ password, confirmation: "DELETE" }, "")).status,
+    ).toBe(401);
+    expect(
+      (
+        await deletion(
+          { password, confirmation: "DELETE" },
+          cookies(login),
+          "https://evil.example",
+        )
+      ).status,
+    ).toBe(403);
+    expect((await deletion({ password, confirmation: "NO" })).status).toBe(400);
+    expect(
+      (await deletion({ password, confirmation: "DELETE", userId: other.id }))
+        .status,
+    ).toBe(400);
+    expect(
+      (await deletion({ password: "wrong-password", confirmation: "DELETE" }))
+        .status,
+    ).toBe(400);
+    expect(await db.user.findUnique({ where: { id: user.id } })).not.toBeNull();
+    expect((await deletion({ password, confirmation: "DELETE" })).status).toBe(
+      200,
+    );
+    expect(await db.user.findUnique({ where: { id: user.id } })).toBeNull();
+    expect(await db.account.count({ where: { userId: user.id } })).toBe(0);
+    expect(await db.session.count({ where: { userId: user.id } })).toBe(0);
+    expect(
+      await db.user.findUnique({ where: { id: other.id } }),
+    ).not.toBeNull();
+    expect((await signIn(user.email)).status).not.toBe(200);
+  });
+  it("protects the last owner and rolls back deletion", async () => {
+    const { deleteOwnAccount } = await import("@/modules/account/service");
+    const soleOwner = await fixture("sole-owner-deletion");
+    const workspace = await svc.createBusiness(soleOwner.id, {
+      name: "Protected workspace",
+    });
+    businesses.push(workspace.id);
+    await expect(
+      deleteOwnAccount(soleOwner.id, { password, confirmation: "DELETE" }),
+    ).rejects.toMatchObject({ code: "LAST_OWNER" });
+    expect(
+      await db.user.findUnique({ where: { id: soleOwner.id } }),
+    ).not.toBeNull();
+    expect(
+      await db.membership.count({
+        where: { businessId: workspace.id, active: true, role: "OWNER" },
+      }),
+    ).toBe(1);
+  });
+  it("removes a departing member while preserving the workspace and audit history", async () => {
+    const { deleteOwnAccount } = await import("@/modules/account/service");
+    const departing = await fixture("departing-profile");
+    await db.membership.create({
+      data: { businessId: b, userId: departing.id, role: "STAFF" },
+    });
+    const event = await db.auditEvent.create({
+      data: {
+        businessId: b,
+        actorUserId: departing.id,
+        action: "TEST_PROFILE_EVENT",
+        resourceId: b,
+        details: {},
+      },
+    });
+    await deleteOwnAccount(departing.id, { password, confirmation: "DELETE" });
+    expect(await db.membership.count({ where: { userId: departing.id } })).toBe(
+      0,
+    );
+    expect(
+      (await db.auditEvent.findUnique({ where: { id: event.id } }))
+        ?.actorUserId,
+    ).toBe("deleted-user");
+    expect(await db.business.findUnique({ where: { id: b } })).not.toBeNull();
+  });
+});

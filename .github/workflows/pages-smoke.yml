@@ -24,16 +24,20 @@ jobs:
         run: |
           set -euo pipefail
           site="https://plummz.github.io/HIGPrintingServices"
-          for attempt in {1..12}; do
-            if curl --fail --silent --show-error --max-time 20 "$site/?revision=${{ github.sha }}" -o /tmp/home.html && grep -q 'motion.js?v=motion-1' /tmp/home.html; then
+          for attempt in {1..24}; do
+            if curl --fail --silent --show-error --max-time 20 "$site/?revision=${{ github.sha }}" -o /tmp/home.html && grep -q 'motion.js?v=studio-2' /tmp/home.html; then
               break
             fi
-            if [ "$attempt" -eq 12 ]; then exit 1; fi
+            if [ "$attempt" -eq 24 ]; then exit 1; fi
             sleep 10
           done
-          curl --fail --silent --show-error --max-time 20 "$site/pages-assets/style.css?v=motion-1" -o /tmp/style.css
-          curl --fail --silent --show-error --max-time 20 "$site/pages-assets/app.js?v=motion-1" -o /tmp/app.js
-          curl --fail --silent --show-error --max-time 20 "$site/pages-assets/motion.js?v=motion-1" -o /tmp/motion.js
+          curl --fail --silent --show-error --max-time 20 "$site/pages-assets/style.css?v=studio-2" -o /tmp/style.css
+          curl --fail --silent --show-error --max-time 20 "$site/pages-assets/app.js?v=studio-2" -o /tmp/app.js
+          curl --fail --silent --show-error --max-time 20 "$site/pages-assets/motion.js?v=studio-2" -o /tmp/motion.js
+          curl --fail --silent --show-error --max-time 20 "$site/pages-assets/studio.js?v=studio-2" -o /tmp/studio.js
+          curl --fail --silent --show-error --max-time 20 "$site/pages-assets/art/shirt.svg" -o /tmp/shirt.svg
+          grep -q 'product-dialog' /tmp/studio.js
+          grep -q '<svg' /tmp/shirt.svg
           grep -q 'PrintFlowMotion' /tmp/motion.js
           grep -q 'paper-feed' /tmp/style.css
           grep -q 'service-grid' /tmp/style.css

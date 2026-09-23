@@ -97,7 +97,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
         <p className="muted">
           {mode === "register"
             ? "Create your account. Set up your business after email verification."
-            : "Your workspace, ready when you are."}
+            : "Your account stays with you. Your next print starts here."}
         </p>
         <form onSubmit={submit}>
           {mode === "register" && (

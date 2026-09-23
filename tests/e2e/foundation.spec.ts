@@ -86,3 +86,42 @@ test("login layout is readable and reset request is neutral", async ({
     "If this email has an account",
   );
 });
+
+test("verified account can delete its own profile and cannot sign in afterward", async ({
+  page,
+}) => {
+  const email = `delete-browser-${randomUUID()}@example.test`;
+  await page.goto("/register");
+  await page.getByLabel("Your name").fill("Deletion Test");
+  await page.getByLabel("Email address").fill(email);
+  await page.getByLabel("Password", { exact: true }).fill(password);
+  await page.getByRole("button", { name: "Create account" }).click();
+  await expect(page.getByRole("status")).toContainText("Check your email");
+  let url = "";
+  for (const file of await readdir(".local/mail")) {
+    const mail = JSON.parse(await readFile(".local/mail/" + file, "utf8"));
+    if (mail.to === email && mail.subject.includes("Verify")) url = mail.url;
+  }
+  expect(url).toBeTruthy();
+  await page.goto(url);
+  await page.goto("/login");
+  await page.getByLabel("Email address").fill(email);
+  await page.getByLabel("Password", { exact: true }).fill(password);
+  await page.getByRole("button", { name: "Sign in", exact: false }).click();
+  await expect(page).toHaveURL(/workspaces$/);
+  await page.getByRole("link", { name: "My profile" }).click();
+  await expect(page).toHaveURL(/account$/);
+  await page.getByRole("button", { name: "Delete my profile…" }).click();
+  await page.getByLabel("Current password").fill(password);
+  await page.getByLabel("Type DELETE to confirm").fill("DELETE");
+  await page
+    .getByRole("button", { name: "Permanently delete my profile" })
+    .click();
+  await expect(page).toHaveURL(/login\?deleted=1$/);
+  await page.getByLabel("Email address").fill(email);
+  await page.getByLabel("Password", { exact: true }).fill(password);
+  await page.getByRole("button", { name: "Sign in", exact: false }).click();
+  await expect(page.getByRole("status")).toContainText("Unable to sign in");
+  await page.goto("/account");
+  await expect(page).toHaveURL(/login$/);
+});

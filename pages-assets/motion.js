@@ -62,7 +62,7 @@
   }
   replay.addEventListener("click", print);
   const targets = document.querySelectorAll(
-    ".hero > div:first-child > *, .hero .paper-stack, .service-card, .print-story-copy, .print-stage, .welcome-banner, .summary-grid > *, #settings, #team",
+    ".hero-copy > *, .hero-collage, .product-tile, .section-top, .process-grid article, .workspace-art, .faq-section details, .contact-finale, .hero > div:first-child > *, .hero .paper-stack, .service-card, .print-story-copy, .print-stage, .welcome-banner, .summary-grid > *, #settings, #team",
   );
   if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver(

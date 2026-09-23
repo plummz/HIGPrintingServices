@@ -74,7 +74,7 @@
       : "#main";
     document.title = workspace
       ? "Workspace preview | PrintFlow"
-      : "HIGP Printing Services | PrintFlow";
+      : "HIGP Printing Services | Big ideas. Beautiful prints.";
     const nextView = workspace ? "workspace-view" : "home-view";
     if (currentView !== nextView) {
       window.PrintFlowMotion?.enter(document.getElementById(nextView));

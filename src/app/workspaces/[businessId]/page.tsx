@@ -58,6 +58,7 @@ export default async function Page({
           {members && <a href="#team">♧ Team & access</a>}
           {events && <a href="#activity">↺ Activity</a>}
           <Link href="/workspaces">↔ Switch workspace</Link>
+          <Link href="/account">My profile</Link>
         </nav>
         <div className="sidebar-bottom">
           <span>{user.name}</span>

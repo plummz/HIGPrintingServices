@@ -13,6 +13,7 @@ export default async function Page() {
           ▧ PrintFlow
         </Link>
         <div className="top-actions">
+          <Link href="/account">My profile</Link>
           <span>{user.name}</span>
           <SignOut />
         </div>
