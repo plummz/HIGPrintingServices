@@ -74,7 +74,12 @@
   }
   document.querySelectorAll(".portal-trigger").forEach((button) =>
     button.addEventListener("click", () => {
-      if (appUrl)
+      if (window.HIGP_CONFIG?.supabaseReady) {
+        window.location.assign(
+          "./account.html?mode=" +
+            (button.dataset.portal === "register" ? "register" : "login"),
+        );
+      } else if (appUrl)
         window.location.assign(
           appUrl +
             (button.dataset.portal === "register" ? "/register" : "/login"),

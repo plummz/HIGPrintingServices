@@ -21,10 +21,12 @@
     "test:e2e": "playwright test",
     "db:local": "node scripts/dev-db.mjs",
     "db:cleanup": "node scripts/cleanup.mjs",
-    "preview": "node scripts/preview.mjs"
+    "preview": "node scripts/preview.mjs",
+    "build:accounts": "esbuild web-auth/account.js --bundle --minify --format=esm --target=es2022 --outfile=pages-assets/account.js"
   },
   "dependencies": {
     "@prisma/client": "6.19.3",
+    "@supabase/supabase-js": "2.117.1",
     "better-auth": "1.7.5",
     "next": "16.3.5",
     "nodemailer": "10.0.10",
@@ -43,6 +45,7 @@
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "dotenv": "18.0.1",
+    "esbuild": "0.28.2",
     "eslint": "9.39.5",
     "eslint-config-next": "16.3.5",
     "prettier": "3.9.8",

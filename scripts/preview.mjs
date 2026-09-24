@@ -28,6 +28,7 @@ const server = createServer(async (request, response) => {
         : resolve(root, "." + path);
     if (
       file !== resolve(root, "index.html") &&
+      file !== resolve(root, "account.html") &&
       !file.startsWith(assets + sep)
     ) {
       response.writeHead(404);

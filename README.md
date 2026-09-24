@@ -1,5 +1,9 @@
 # PrintFlow
 
+## Supabase account integration
+
+The selected live-account architecture is **GitHub Pages + Supabase Auth**. The browser account page and server-side deletion function are prepared, but production activation is pending the Supabase project connection and verified email delivery. See [activation instructions](docs/SUPABASE_ACCOUNTS.md). The Next.js implementation below remains separate; its workspace features have not been migrated.
+
 ## Live website preview
 
 [Open HIGP / PrintFlow](https://plummz.github.io/HIGPrintingServices/). GitHub Pages publishes the root `index.html` and `pages-assets/` using **main / (root)**. It provides the public service homepage and an interactive workspace preview. Business settings are saved only in the visitor's browser; reset clears them. No passwords, accounts, invitations or orders are submitted from this preview.

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src https://*.supabase.co; img-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>Your account | HIGP</title>
+    <link rel="stylesheet" href="./pages-assets/style.css?v=studio-2" />
+    <link rel="stylesheet" href="./pages-assets/account.css" />
+    <script src="./pages-assets/config.js?v=supabase-1" defer></script>
+    <script type="module" src="./pages-assets/account.js?v=supabase-1"></script>
+  </head>
+  <body class="account-page">
+    <main class="account-card">
+      <a href="./index.html">← HIGP Printing Services</a>
+      <p class="eyebrow">YOUR IDEAS. YOUR ACCOUNT.</p>
+      <h1 id="title">Your account.</h1>
+      <p id="status" role="status" aria-live="polite"></p>
+      <p id="setup">
+        Account setup is in progress. You can still explore our printing
+        services.
+      </p>
+      <noscript>Enable JavaScript to access your account.</noscript>
+      <div id="ready" hidden>
+        <section data-panel="login">
+          <form id="login">
+            <label
+              >Email<input
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+                maxlength="254" /></label
+            ><label
+              >Password<input
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                required
+                maxlength="128" /></label
+            ><button type="submit">Log in →</button>
+          </form>
+          <button data-view="register" class="secondary">
+            Create an account</button
+          ><button data-view="forgot" class="secondary">
+            Forgot password?
+          </button>
+        </section>
+        <section data-panel="register" hidden>
+          <form id="register">
+            <label
+              >Your name<input
+                name="name"
+                autocomplete="name"
+                required
+                maxlength="100" /></label
+            ><label
+              >Email<input
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+                maxlength="254" /></label
+            ><label
+              >Password · at least 12 characters<input
+                name="password"
+                type="password"
+                autocomplete="new-password"
+                required
+                minlength="12"
+                maxlength="128" /></label
+            ><button type="submit">Create account →</button>
+          </form>
+          <button data-view="login" class="secondary">
+            Already registered? Log in
+          </button>
+        </section>
+        <section data-panel="forgot" hidden>
+          <form id="forgot">
+            <label
+              >Email<input
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+                maxlength="254" /></label
+            ><button type="submit">Send reset link</button>
+          </form>
+          <button data-view="login" class="secondary">Back to login</button>
+        </section>
+        <section data-panel="password" hidden>
+          <form id="password">
+            <label
+              >New password · at least 12 characters<input
+                name="password"
+                type="password"
+                autocomplete="new-password"
+                required
+                minlength="12"
+                maxlength="128" /></label
+            ><button type="submit">Save new password</button>
+          </form>
+        </section>
+        <section data-panel="profile" hidden>
+          <p>Signed in as <strong id="email-label"></strong></p>
+          <p>
+            Your account is stored securely online. Signing out does not delete
+            it.
+          </p>
+          <button id="logout" class="secondary">Sign out</button>
+          <hr />
+          <details>
+            <summary>Delete my account</summary>
+            <p>
+              This permanently removes your login and profile. You will need to
+              register again to return.
+            </p>
+            <form id="delete">
+              <label
+                >Current password<input
+                  name="password"
+                  type="password"
+                  autocomplete="current-password"
+                  required
+                  maxlength="128" /></label
+              ><label
+                >Type DELETE to confirm<input
+                  name="confirmation"
+                  required
+                  pattern="DELETE"
+                  autocomplete="off" /></label
+              ><button type="submit" class="danger">
+                Permanently delete account
+              </button>
+            </form>
+          </details>
+        </section>
+      </div>
+      <p class="account-note">
+        Order management is still in development. This account does not unlock
+        the workspace preview as a live ordering system.
+      </p>
+    </main>
+  </body>
+</html>

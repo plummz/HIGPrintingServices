@@ -5,5 +5,10 @@ export default defineConfig([
   ...next,
   ...ts,
   { rules: { "@next/next/no-location-assign-relative-destination": "off" } },
-  globalIgnores([".next/**", "next-env.d.ts"]),
+  globalIgnores([
+    ".next/**",
+    "next-env.d.ts",
+    "pages-assets/account.js",
+    "supabase/functions/**",
+  ]),
 ]);

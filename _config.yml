@@ -22,3 +22,5 @@ exclude:
   - playwright.config.ts
   - vitest.config.ts
   - vitest.integration.config.ts
+  - web-auth
+  - supabase

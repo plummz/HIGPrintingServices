@@ -6,3 +6,5 @@ prisma/migrations
 coverage
 test-results
 playwright-report
+
+pages-assets/account.js
