@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HIGP Agent Hub</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family:
+          Segoe UI,
+          Arial,
+          sans-serif;
+        background: #101827;
+        color: #e9eef7;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+      }
+      main {
+        max-width: 1050px;
+        margin: auto;
+        padding: 48px 24px 72px;
+      }
+      .eyebrow {
+        color: #75d7d0;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      h1 {
+        font-size: clamp(2rem, 5vw, 3.4rem);
+        margin: 12px 0;
+      }
+      h2 {
+        font-size: 1.15rem;
+        margin: 0 0 10px;
+      }
+      p {
+        line-height: 1.6;
+        color: #b8c5d8;
+      }
+      .intro {
+        max-width: 720px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 16px;
+        margin: 30px 0;
+      }
+      .card,
+      .panel {
+        background: #192538;
+        border: 1px solid #34445d;
+        border-radius: 16px;
+        padding: 22px;
+      }
+      .tag {
+        display: inline-block;
+        color: #a9e8dd;
+        background: #123d42;
+        border-radius: 999px;
+        padding: 5px 10px;
+        font-size: 0.78rem;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #7ddfe1;
+        text-decoration: none;
+      }
+      a:hover,
+      a:focus-visible {
+        text-decoration: underline;
+      }
+      a:focus-visible {
+        outline: 2px solid #7ddfe1;
+        outline-offset: 4px;
+      }
+      ul {
+        list-style: none;
+        margin: 16px 0 0;
+        padding: 0;
+      }
+      li {
+        margin: 10px 0;
+      }
+      .panel {
+        margin-top: 16px;
+      }
+      .note {
+        font-size: 0.9rem;
+      }
+      .map {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        border: 1px solid #34445d;
+      }
+      .role-list li {
+        padding: 9px 0;
+        border-bottom: 1px solid #34445d;
+      }
+      .role-list li:last-child {
+        border-bottom: 0;
+      }
+      .role-list strong {
+        display: block;
+        margin-bottom: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="eyebrow">PrintFlow / HIG Printing Services</div>
+      <h1>Agent Hub</h1>
+      <p class="intro">
+        These roles are available on demand; only the ones needed for a task are
+        invoked. Open their instructions and skills from the local project.
+        These repository files can also be kept on GitHub.
+      </p>
+      <section class="panel">
+        <h2>Visual worktree</h2>
+        <a href="agent-map.jpg"
+          ><img
+            class="map"
+            src="agent-map.jpg"
+            alt="Agent worktree showing the program manager above input, UX, design, commerce, and creative tool roles, followed by implementation, verification, QA testing, review, and website progress tracking"
+        /></a>
+      </section>
+      <div class="grid">
+        <section class="card">
+          <span class="tag">Main agent</span>
+          <h2>Implementer</h2>
+          <p>
+            Owns the requested change, resolves findings, and reports the
+            outcome.
+          </p>
+          <ul>
+            <li><a href="../AGENTS.md">Shared project instructions</a></li>
+            <li><a href="AI_AGENTS.md">Workflow and handoffs</a></li>
+          </ul>
+        </section>
+        <section class="card">
+          <span class="tag">Verification role</span>
+          <h2>Verifier</h2>
+          <p>
+            Runs relevant checks and reports what passed, failed, or was not
+            run.
+          </p>
+          <ul>
+            <li>
+              <a href="../.claude/agents/verifier.md"
+                >Claude agent instructions</a
+              >
+            </li>
+            <li>
+              <a href="../.agents/skills/verify/SKILL.md"
+                >Codex verification skill</a
+              >
+            </li>
+          </ul>
+        </section>
+        <section class="card">
+          <span class="tag">Test stage</span>
+          <h2>QA Tester</h2>
+          <p>
+            Tests user journeys, error paths, accessibility, and browser
+            behavior in a safe environment.
+          </p>
+          <ul>
+            <li>
+              <a href="../.claude/agents/qa-tester.md"
+                >Claude agent instructions</a
+              >
+            </li>
+            <li>
+              <a href="../.agents/skills/qa-tester/SKILL.md">Codex QA skill</a>
+            </li>
+          </ul>
+        </section>
+        <section class="card">
+          <span class="tag">Review role</span>
+          <h2>Reviewer</h2>
+          <p>
+            Checks the diff for bugs, security issues, and missing coverage.
+          </p>
+          <ul>
+            <li>
+              <a href="../.claude/agents/reviewer.md"
+                >Claude agent instructions</a
+              >
+            </li>
+            <li>
+              <a href="../.agents/skills/review-diff/SKILL.md"
+                >Codex review skill</a
+              >
+            </li>
+          </ul>
+        </section>
+      </div>
+      <div class="grid">
+        <section class="panel">
+          <h2>Operations and oversight</h2>
+          <ul class="role-list">
+            <li>
+              <strong>Work Intake</strong
+              ><a href="../.claude/agents/work-intake.md"
+                >Claude instructions</a
+              >
+              · <a href="../.agents/skills/work-intake/SKILL.md">Codex skill</a>
+            </li>
+            <li>
+              <strong>Customer Input</strong
+              ><a href="../.claude/agents/customer-input.md"
+                >Claude instructions</a
+              >
+              ·
+              <a href="../.agents/skills/customer-input/SKILL.md"
+                >Codex skill</a
+              >
+            </li>
+            <li>
+              <strong>Website Progress</strong
+              ><a href="../.claude/agents/progress-tracker.md"
+                >Claude instructions</a
+              >
+              ·
+              <a href="../.agents/skills/progress-tracker/SKILL.md"
+                >Codex skill</a
+              >
+            </li>
+            <li>
+              <strong>Program Manager</strong
+              ><a href="../.claude/agents/program-manager.md"
+                >Claude instructions</a
+              >
+              ·
+              <a href="../.agents/skills/program-manager/SKILL.md"
+                >Codex skill</a
+              >
+            </li>
+          </ul>
+        </section>
+        <section class="panel">
+          <h2>Commerce</h2>
+          <ul class="role-list">
+            <li>
+              <strong>Commerce Flow</strong
+              ><a href="../.claude/agents/commerce-flow.md"
+                >Claude instructions</a
+              >
+              ·
+              <a href="../.agents/skills/commerce-flow/SKILL.md">Codex skill</a>
+            </li>
+            <li>
+              <strong>Money Specialist</strong
+              ><a href="../.claude/agents/money.md">Claude instructions</a> ·
+              <a href="../.agents/skills/money/SKILL.md">Codex skill</a>
+            </li>
+          </ul>
+        </section>
+        <section class="panel">
+          <h2>UX strategy and delivery</h2>
+          <ul class="role-list">
+            <li>
+              <strong>UX Researcher</strong
+              ><a href="../.claude/agents/ux-researcher.md"
+                >Claude instructions</a
+              >
+              ·
+              <a href="../.agents/skills/ux-researcher/SKILL.md">Codex skill</a>
+            </li>
+            <li>
+              <strong>UX Writer</strong
+              ><a href="../.claude/agents/ux-writer.md">Claude instructions</a>
+              · <a href="../.agents/skills/ux-writer/SKILL.md">Codex skill</a>
+            </li>
+            <li>
+              <strong>UX Designer</strong
+              ><a href="../.claude/agents/ux-designer.md"
+                >Claude instructions</a
+              >
+              · <a href="../.agents/skills/ux-designer/SKILL.md">Codex skill</a>
+            </li>
+            <li>
+              <strong>UX Engineer</strong
+              ><a href="../.claude/agents/ux-engineer.md"
+                >Claude instructions</a
+              >
+              · <a href="../.agents/skills/ux-engineer/SKILL.md">Codex skill</a>
+            </li>
+          </ul>
+        </section>
+        <section class="panel">
+          <h2>Design specialists</h2>
+          <ul class="role-list">
+            <li>
+              <strong>Interaction Designer</strong
+              ><a href="../.claude/agents/interaction-designer.md"
+                >Claude instructions</a
+              >
+              ·
+              <a href="../.agents/skills/interaction-designer/SKILL.md"
+                >Codex skill</a
+              >
+            </li>
+            <li>
+              <strong>Visual Designer</strong
+              ><a href="../.claude/agents/visual-designer.md"
+                >Claude instructions</a
+              >
+              ·
+              <a href="../.agents/skills/visual-designer/SKILL.md"
+                >Codex skill</a
+              >
+            </li>
+            <li>
+              <strong>Motion Designer</strong
+              ><a href="../.claude/agents/motion-designer.md"
+                >Claude instructions</a
+              >
+              ·
+              <a href="../.agents/skills/motion-designer/SKILL.md"
+                >Codex skill</a
+              >
+            </li>
+            <li>
+              <strong>Production Designer</strong
+              ><a href="../.claude/agents/production-designer.md"
+                >Claude instructions</a
+              >
+              ·
+              <a href="../.agents/skills/production-designer/SKILL.md"
+                >Codex skill</a
+              >
+            </li>
+          </ul>
+        </section>
+      </div>
+      <section class="panel">
+        <h2>Creative apps and 3D mockups</h2>
+        <p>
+          The <a href="../design/3d/README.md">3D garment workflow</a> explains
+          how Blender, optional Godot previews, and Antigravity/Gemini fit
+          together. Draft client artwork stays private until approved.
+        </p>
+        <ul class="role-list">
+          <li>
+            <strong>Creative Tools Coordinator</strong
+            ><a href="../.claude/agents/creative-tools-coordinator.md"
+              >Claude instructions</a
+            >
+            ·
+            <a href="../.agents/skills/creative-tools-coordinator/SKILL.md"
+              >Codex skill</a
+            >
+          </li>
+          <li>
+            <strong>Shirt 3D Artist</strong
+            ><a href="../.claude/agents/shirt-3d-artist.md"
+              >Claude instructions</a
+            >
+            ·
+            <a href="../.agents/skills/shirt-3d-artist/SKILL.md">Codex skill</a>
+          </li>
+          <li>
+            <strong>Fit/Size Reviewer</strong
+            ><a href="../.claude/agents/fit-size-reviewer.md"
+              >Claude instructions</a
+            >
+            ·
+            <a href="../.agents/skills/fit-size-reviewer/SKILL.md"
+              >Codex skill</a
+            >
+          </li>
+        </ul>
+      </section>
+      <section class="panel">
+        <h2>Tasks</h2>
+        <p>
+          See the current assignments, status, and next actions on the
+          <a href="AGENT_TASKS.md">agent task board</a>.
+        </p>
+        <p>
+          The <a href="CUSTOMER_INSIGHTS.md">customer insights report</a>
+          records approved request sources and common needs when real data is
+          available.
+        </p>
+        <p class="note">
+          Open the <a href="../">project folder</a> in Antigravity IDE to work
+          with its files. The IDE's Gemini assistant can use the shared
+          instructions when you provide them as context.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

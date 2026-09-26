@@ -3,6 +3,8 @@ exclude:
   - README.md
   - AGENTS.md
   - CLAUDE.md
+  - .agents
+  - .claude
   - docs
   - src
   - prisma
